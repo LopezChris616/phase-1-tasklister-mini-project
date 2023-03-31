@@ -27,6 +27,7 @@ function createTodoElement(input) {
     button.textContent = "X";
     li.appendChild(button);
     todoList.appendChild(li);
+    todoPriority(li);
     input.value = "";
   
     deleteTodo(button);
@@ -48,4 +49,22 @@ function inputValidation() {
   const p = document.createElement("p");
   p.textContent = "Must enter at least 5 characters!";
   validationMessage.appendChild(p);
+}
+
+function todoPriority(todo) {
+  const priority = document.getElementById("priority");
+  switch (priority.value) {
+    case "High":
+      todo.style.color = "red";
+      break;
+    case "Medium":
+      todo.style.color = "yellow";
+      break;
+    case "Low":
+      todo.style.color = "green";
+      break;
+    default:
+      todo.style.color = "black";
+      break;
+  }
 }
