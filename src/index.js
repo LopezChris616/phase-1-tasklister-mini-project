@@ -16,7 +16,8 @@ function submitForm() {
 function createTodoElement(input) {
   if(input.value.length >= 5) {
     const li = document.createElement("li");
-    const button = document.createElement("button");
+    const deleteButton = document.createElement("button");
+    const editButton = document.createElement("button");
     const todoList = document.getElementById("tasks");
 
     if(validationMessage.hasChildNodes()) {
@@ -24,13 +25,23 @@ function createTodoElement(input) {
     }
   
     li.textContent = `${input.value} `;
-    button.textContent = "X";
-    li.appendChild(button);
+    deleteButton.textContent = "X";
+    editButton.textContent = "Edit";
+    li.appendChild(deleteButton);
+    li.appendChild(editButton);
     todoList.appendChild(li);
     todoPriority(li);
+
+    const todoArr = [];
+    todoArr.push(input.value);
+    console.log(todoArr);
+
+    editButton.addEventListener("click", () => {
+      editTodo(todoArr, li);
+    });
     input.value = "";
   
-    deleteTodo(button);
+    deleteTodo(deleteButton);
   } else {
     if(validationMessage.hasChildNodes() === false) {
       inputValidation();
@@ -67,4 +78,16 @@ function todoPriority(todo) {
       todo.style.color = "black";
       break;
   }
+}
+
+function editTodo(todo, li) {
+  const editInput = document.createElement("input");
+  const saveButton = document.createElement("button");
+  const editDiv = document.createElement("div");
+  editInput.value = todo[0];
+  saveButton.textContent = "Save Changes";
+  editDiv.appendChild(editInput);
+  editDiv.appendChild(saveButton);
+
+  li.appendChild(editDiv);
 }
