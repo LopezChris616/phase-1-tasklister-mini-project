@@ -34,10 +34,9 @@ function createTodoElement(input) {
 
     const todoArr = [];
     todoArr.push(input.value);
-    console.log(todoArr);
 
     editButton.addEventListener("click", () => {
-      editTodo(todoArr, li);
+      editTodo(todoArr, li, todoArr);
     });
     input.value = "";
   
@@ -80,14 +79,26 @@ function todoPriority(todo) {
   }
 }
 
-function editTodo(todo, li) {
+function editTodo(todo, li, todoArr) {
   const editInput = document.createElement("input");
   const saveButton = document.createElement("button");
   const editDiv = document.createElement("div");
-  editInput.value = todo[0];
-  saveButton.textContent = "Save Changes";
-  editDiv.appendChild(editInput);
-  editDiv.appendChild(saveButton);
-
-  li.appendChild(editDiv);
+  
+  if(li.childNodes.length <= 3) {
+    editInput.value = todo[0];
+    saveButton.textContent = "Save Changes";
+    editDiv.appendChild(editInput);
+    editDiv.appendChild(saveButton);
+  
+    li.appendChild(editDiv);
+  
+    editDiv.style.display = "block";
+  
+    saveButton.addEventListener("click", () => {
+      li.childNodes[0].textContent = editInput.value;
+      todoArr[0] = editInput.value;
+    });
+  } else {
+    li.removeChild(li.childNodes[3]);
+  }
 }
